@@ -1,5 +1,5 @@
 const { Validator } = require("jsonschema");
-const db = require("./dbConfig");
+const db = require("./db-config");
 const ValidationError = require("../errors/ValidationError");
 
 const validator = new Validator();

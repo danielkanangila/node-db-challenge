@@ -3,7 +3,7 @@ const Task = require("./../models/Task");
 
 exports.verifyProjectId = async (req, res, next) => {
   try {
-    const project = Project.findById(req.params.id);
+    const project = await Project.findById(req.params.id);
     if (!project) {
       return res
         .status(400)
@@ -19,7 +19,7 @@ exports.verifyProjectId = async (req, res, next) => {
 
 exports.verifyTaskId = async (req, res, next) => {
   try {
-    const task = Task.findById(req.params.id);
+    const task = await Task.findById(req.params.id);
     if (!task) {
       return res
         .status(400)
