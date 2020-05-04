@@ -52,7 +52,7 @@ Foreign Key
 
 - [ ] What do we need in order to have a _many to many_ relationship between two tables.
 
-To have a many to many relationship between two tables with we need to create a new table that holds foreign keys that reference the primary key on the related tables.
+To have a many to many relationship between two tables, we need to create a new table that holds foreign keys that reference the primary key on the related tables.
 
 ## Minimum Viable Product
 
