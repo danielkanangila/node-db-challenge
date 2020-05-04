@@ -1,9 +1,10 @@
 const Task = require("./../models/Task");
+const Project = require("./../models/Project");
 
 class TasksController {
   static async index(req, res, next) {
     try {
-      const tasks = await Task.findTasksByProjectId();
+      const tasks = await Task.findTasksByProjectId(req.project.id);
       res.json(tasks);
     } catch (error) {
       next(error);
@@ -18,9 +19,12 @@ class TasksController {
   }
   static async create(req, res, next) {
     try {
-      const payload = req.body;
-      payload.completed = req.body.completed || false;
-      const task = Task.create(payload);
+      const payload = {
+        projectId: req.project.id,
+        completed: false,
+        ...req.body,
+      };
+      const task = await Task.create(payload);
       res.status(201).json(task);
     } catch (error) {
       next(error);
@@ -28,8 +32,12 @@ class TasksController {
   }
   static async update(req, res, next) {
     try {
-      const task = Task.update(req.task.id, req.body);
-      res.json(Task);
+      const payload = {
+        ...req.task,
+        ...req.body,
+      };
+      const task = await Task.update(payload.id, payload);
+      res.json(task);
     } catch (error) {
       next(error);
     }

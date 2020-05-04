@@ -9,9 +9,17 @@ class ProjectsController {
       next(error);
     }
   }
-  static show(req, res, next) {
+  static async show(req, res, next) {
     try {
       res.json(req.project);
+    } catch (error) {
+      next(error);
+    }
+  }
+  static async showResourcesAndTasks(req, res, next) {
+    try {
+      const project = await Project.findTasksProjectById(req.project.id);
+      res.json(project);
     } catch (error) {
       next(error);
     }
@@ -20,7 +28,7 @@ class ProjectsController {
     try {
       const payload = req.body;
       payload.completed = req.body.completed || false;
-      const project = Project.create(payload);
+      const project = await Project.create(payload);
       res.status(201).json(project);
     } catch (error) {
       next(error);
@@ -28,7 +36,11 @@ class ProjectsController {
   }
   static async update(req, res, next) {
     try {
-      const project = Project.update(req.project.id, req.body);
+      const payload = {
+        ...req.project,
+        ...req.body,
+      };
+      const project = await Project.update(req.project.id, payload);
       res.json(project);
     } catch (error) {
       next(error);

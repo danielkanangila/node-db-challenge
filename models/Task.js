@@ -20,7 +20,11 @@ class Task extends Model {
   findTasksByProjectId(projectId) {
     return this.query()
       .join("projects", "projects.id", `${this.tableName}.projectId`)
-      .select("tasks.*", "projects.name", "projects.description")
+      .select(
+        "tasks.*",
+        "projects.name as projectName",
+        "projects.description as projectDescription"
+      )
       .where(`${this.tableName}.projectId`, projectId);
   }
 }

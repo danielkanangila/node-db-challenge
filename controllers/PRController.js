@@ -1,9 +1,9 @@
-const PR = require("../models/Project");
+const PR = require("../models/ProjectResource");
 
 class PRController {
   static async create(req, res, next) {
     try {
-      const pr = PR.create(req.body);
+      const pr = await PR.create(req.body);
       res.status(201).json(pr);
     } catch (error) {
       next(error);

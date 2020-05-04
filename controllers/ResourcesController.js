@@ -18,7 +18,7 @@ class ResourcesController {
   }
   static async create(req, res, next) {
     try {
-      const resource = Resource.create(req.body);
+      const resource = await Resource.create(req.body);
       res.status(201).json(resource);
     } catch (error) {
       next(error);
@@ -26,7 +26,11 @@ class ResourcesController {
   }
   static async update(req, res, next) {
     try {
-      const resource = Resource.update(req.resource.id, req.body);
+      const payload = {
+        ...req.resource,
+        ...req.body,
+      };
+      const resource = await Resource.update(req.resource.id, payload);
       res.json(resource);
     } catch (error) {
       next(error);
